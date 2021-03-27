@@ -6,7 +6,7 @@ const internalLib = require("./lib/internal");
 
 const handler = async () => {
   const currentDateTime = new Date()
-  currentDateTime.setTime(currentDate.getTime() + 1 * 60 * 60 * 1000);
+  currentDateTime.setTime(currentDateTime.getTime() + 1 * 60 * 60 * 1000);
   const users = await dynamoLib.getAllUserInfo();
   console.log("Users retrieved", users);
 

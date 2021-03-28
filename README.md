@@ -89,7 +89,7 @@ If you use the GUI, you can easily create your data.
 Create Table :
 
 Create table named `TGTG-consumers`
-Hash attribute name `phoneNumber` of type `String`
+Hash attribute name `contact` of type `String`
 Leave everything like it is, click Submit.
 
 Go in this table and click Create Item, use this sample data :
@@ -116,9 +116,9 @@ Go in this table and click Create Item, use this sample data :
       "start": "21:00"
     }
   ],
-  "phoneNumber": "+33610101010",
+  "contact": "abcd@gmail.com",
   "radius": 5
 }
 ```
 
-You can replace location, notifPreference, phoneNumber and radius with values you want.
+You can replace location, notifPreference, contact and radius with values you want.

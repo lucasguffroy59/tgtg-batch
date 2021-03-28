@@ -27,16 +27,16 @@ const handler = async () => {
     );
     if (availItems.length) {
       console.log(
-        `${availItems.length} baskets available for user ${anUser.phoneNumber}`
+        `${availItems.length} baskets available for user ${anUser.contact}`
       );
       const stores = availItems.map((anItem) => anItem.store.store_id);
       if (!internalLib.canBeNotified(stores, anUser.lastStoreNotif)) return;
       await snsLib.publishAvailableBaskets(
-        anUser.phoneNumber,
+        anUser.contact,
         availItems.length
       );
-      await dynamoLib.updateBasicCooldown(anUser.phoneNumber);
-      await dynamoLib.updateDetailedCooldown(anUser.phoneNumber, stores);
+      await dynamoLib.updateBasicCooldown(anUser.contact);
+      await dynamoLib.updateDetailedCooldown(anUser.contact, stores);
     }
   });
   await Promise.all(process);

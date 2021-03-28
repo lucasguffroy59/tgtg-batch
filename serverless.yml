@@ -12,8 +12,8 @@ provider:
     API_LOGIN_ROUTE: auth/v1/loginByEmail
     API_URL: https://apptoogoodtogo.com/api/
     LOGIN_SECRET_TAG: dev/tgtg/login
-    DYNAMODB_CONSUMERS_TABLE: "consumersTable"
-    SNS_TOPIC_NOTIFY_CONSUMERS: "arn:aws:sns:eu-west-1:104887580826:notifyConsumersTopic"
+    DYNAMODB_CONSUMERS_TABLE: "tgtgConsumersTable"
+    SNS_TOPIC_NOTIFY_CONSUMERS: "arn:aws:sns:eu-west-1:104887580826:tgtgNotifyConsumersTopic"
 
 plugins:
   - serverless-plugin-optimize
@@ -28,19 +28,19 @@ functions:
 
 resources:
   Resources:
-    consumersTable:
+    tgtgConsumersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: consumersTable
+        TableName: tgtgConsumersTable
         AttributeDefinitions:
-          - AttributeName: phoneNumber
+          - AttributeName: contact
             AttributeType: S
         KeySchema:
-          - AttributeName: phoneNumber
+          - AttributeName: contact
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
     notifyConsumersTopic:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: "Notif TGTG"
-        TopicName: notifyConsumersTopic
+        DisplayName: "Notif 2G2G"
+        TopicName: tgtgNotifyConsumersTopic

@@ -42,5 +42,5 @@ resources:
     notifyConsumersTopic:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: "Notify TGTG consumers"
+        DisplayName: "Notif TGTG"
         TopicName: notifyConsumersTopic

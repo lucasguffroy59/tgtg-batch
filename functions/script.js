@@ -6,7 +6,6 @@ const internalLib = require("../lib/internal");
 
 const handler = async () => {
   const currentDateTime = new Date();
-  currentDateTime.setTime(currentDateTime.getTime() + 1 * 60 * 60 * 1000);
   console.time("LOGIN");
   await tgtgLib.login();
   console.timeEnd("LOGIN");
@@ -30,11 +29,15 @@ const handler = async () => {
         `${availItems.length} baskets available for user ${anUser.contact}`
       );
       const stores = availItems.map((anItem) => anItem.store.store_id);
-      if (!internalLib.canBeNotified(stores, anUser.lastStoreNotif)) return;
-      await snsLib.publishAvailableBaskets(
-        anUser.contact,
-        availItems.length
-      );
+      if (
+        !internalLib.canBeNotified(
+          currentDateTime,
+          stores,
+          anUser.lastStoreNotif
+        )
+      )
+        return;
+      await snsLib.publishAvailableBaskets(anUser.contact, availItems.length);
       await dynamoLib.updateBasicCooldown(anUser.contact);
       await dynamoLib.updateDetailedCooldown(anUser.contact, stores);
     }

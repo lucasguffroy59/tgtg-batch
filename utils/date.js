@@ -56,7 +56,6 @@ const canBeNotified = (currentDate, lastNotification) => {
  * @returns {boolean} True if date is less than X hours ago, else false
  */
 const wasLessThanXHoursAgo = (currentDate, date, hours) => {
-  console.log({ currentDate, date, hours });
   const isValid = date + hours * 60 * 60 * 1000 > currentDate;
   return isValid;
 };

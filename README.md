@@ -88,7 +88,7 @@ If you use the GUI, you can easily create your data.
 
 Create Table :
 
-Create table named `TGTG-consumers`
+Create table named `tgtgConsumersTable`
 Hash attribute name `contact` of type `String`
 Leave everything like it is, click Submit.
 

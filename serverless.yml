@@ -1,0 +1,46 @@
+service: too-good-to-notify
+frameworkVersion: "2"
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: eu-west-1
+  role: arn:aws:iam::104887580826:role/lambda-tgtg-notifier-role # Put here the ARN to a role that allows at least SNS publish and dynamoDB read/write
+  environment:
+    API_ITEMS_ROUTE: item/v7/
+    API_LOGIN_ROUTE: auth/v1/loginByEmail
+    API_URL: https://apptoogoodtogo.com/api/
+    LOGIN_SECRET_TAG: dev/tgtg/login
+    DYNAMODB_CONSUMERS_TABLE: "consumersTable"
+    SNS_TOPIC_NOTIFY_CONSUMERS: "arn:aws:sns:eu-west-1:104887580826:notifyConsumersTopic"
+
+plugins:
+  - serverless-plugin-optimize
+
+functions:
+  notifyConsumersBatch:
+    handler: functions/script.handler
+    memorySize: 128
+    timeout: 15
+    events:
+      - schedule: rate(5 minutes)
+
+resources:
+  Resources:
+    consumersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: consumersTable
+        AttributeDefinitions:
+          - AttributeName: phoneNumber
+            AttributeType: S
+        KeySchema:
+          - AttributeName: phoneNumber
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    notifyConsumersTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: "Notify TGTG consumers"
+        TopicName: notifyConsumersTopic

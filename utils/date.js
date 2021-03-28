@@ -27,7 +27,7 @@ const isBetween = (date, startTime, endTime) => {
 /**
  * Know if a current date matches hour ranges preferences (is in one of them)
  * @param {Date} currentDate Current date
- * @param {[object]} preferences An array of time ranges
+ * @param {object[]} preferences An array of time ranges
  * @returns {boolean} True if current date matches preferences, false if not
  */
 const dateIsValid = (currentDate, preferences) => {
@@ -56,7 +56,7 @@ const canBeNotified = (currentDate, lastNotification) => {
  * @returns {boolean} True if date is less than X hours ago, else false
  */
 const wasLessThanXHoursAgo = (currentDate, date, hours) => {
-  console.log({currentDate, date, hours})
+  console.log({ currentDate, date, hours });
   const isValid = date + hours * 60 * 60 * 1000 > currentDate;
   return isValid;
 };

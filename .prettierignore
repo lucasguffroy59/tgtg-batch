@@ -1,0 +1,4 @@
+.serverless
+*.json
+*.yml
+*.md

@@ -15,7 +15,7 @@ const handler = async () => {
   console.log(`${users.length} users retrieved`);
 
   console.time("GET_ALL_BASKETS");
-  const process = users.map(async (anUser) => {
+  const mainProcess = users.map(async (anUser) => {
     if (!dateUtil.dateIsValid(currentDateTime, anUser.notifPreference)) return;
     if (!dateUtil.canBeNotified(currentDateTime, anUser.lastNotificationDate))
       return;
@@ -42,7 +42,7 @@ const handler = async () => {
       await dynamoLib.updateDetailedCooldown(anUser.contact, stores);
     }
   });
-  await Promise.all(process);
+  await Promise.all(mainProcess);
   console.timeEnd("GET_ALL_BASKETS");
   console.log("Everything went fine");
   return {};

@@ -9,6 +9,9 @@ provider:
   region: eu-west-1
   role: arn:aws:iam::104887580826:role/lambda-tgtg-notifier-role # Put here the ARN to a role that allows at least SNS publish and dynamoDB read/write
   environment:
+    STAGE: ${self:provider.stage}
+    REGION: ${self:provider.region}
+    LOG_LEVEL: info
     API_ITEMS_ROUTE: item/v7/
     API_LOGIN_ROUTE: auth/v1/loginByEmail
     API_URL: https://apptoogoodtogo.com/api/

@@ -33,9 +33,7 @@ You can enter the specific times of the day you wish to be notified. You will **
 
 ## Execute locally
 
-To run this project locally, follow these steps :
-
-### Setup DynamoDB locally
+### Setup your local environment for the first time
 
 #### Prerequisites
 
@@ -44,7 +42,7 @@ To run this project locally, follow these steps :
 
 #### Steps
 
-- Create docker-compose file :
+##### Create docker-compose file :
 
 Create a `docker-compose.yml` file, put this snippet in it :
 
@@ -62,7 +60,7 @@ services:
     working_dir: /home/dynamodblocal
 ```
 
-- Run it with Docker
+##### Run it with Docker
 
 Go to your Terminal, go to the folder where you created the docker-compose file, and run this :
 
@@ -70,9 +68,9 @@ Go to your Terminal, go to the folder where you created the docker-compose file,
 
 You know have a local DynamoDB service up & running.
 
-- Optional : GUI
+##### Install Dynamo GUI
 
-You can work with a pretty useful DDynamoDB GUI for your local interactions with dynamo. Simply install the lib globally :
+You can work with a pretty useful DynamoDB GUI for your local interactions with dynamo. Simply install the lib globally :
 
 `npm i -g dynamodb-admin`
 
@@ -80,15 +78,15 @@ Then run on your Terminal :
 
 `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin`
 
-You can then open your browser to `http://localhost:8000`
+You can then open your browser to `http://localhost:8001` (whatever the execution script tells you) to access GUI.
 
-- Put data in the database
+##### Put data in the database
 
 If you use the GUI, you can easily create your data.
 
 Create Table :
 
-Create table named `tgtgConsumersTable`
+Create a table named like what is in serverless env variable DYNAMODB_CONSUMERS_TABLE
 Hash attribute name `contact` of type `String`
 Leave everything like it is, click Submit.
 
@@ -122,3 +120,16 @@ Go in this table and click Create Item, use this sample data :
 ```
 
 You can replace location, notifPreference, contact and radius with values you want.
+
+### Start your local env
+
+You can now run `npm run offline`, and, ta-da !
+
+You can now trigger the script via HTTP request and it'll fully work.
+
+The SNS notification is mocked, nothing will be sent, for tests purpose. But every other feature works as in production.
+
+### Everyday use
+
+When everything is setup, you'll just need to run the `docker-compose up -d` command to run DynamoDB local if the container is down, and run `npm run offline`.
+

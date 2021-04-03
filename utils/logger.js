@@ -1,28 +1,24 @@
-// const winston = require("winston");
+const log = (level, data, obj) => {
+  const logBody = {
+    level,
+  };
+  if (data instanceof Error) {
+    logBody.type = data.name;
+    logBody.details = { message: data.message, stack: data.stack };
+    console.log(JSON.stringify(logBody));
+    return;
+  }
+  logBody.message = data;
+  logBody.data = obj;
+  console.log(JSON.stringify(logBody));
+};
 
-// const log = winston.createLogger({
-//   format: winston.format.combine(
-//     winston.format.simple(),
-//     winston.format.timestamp(),
-//     winston.format.printf((info) => {
-//       const { timestamp, level, message, ...args } = info;
-//       const formattedLog = {
-//         level: level.toUpperCase(),
-//         timestamp,
-//         message,
-//       };
-//       if (Object.keys(args).length) formattedLog.data = args;
-//       return JSON.stringify(formattedLog, null, 2);
-//     })
-//   ),
-//   transports: [
-//     new winston.transports.Console({
-//       level: process.env.LOG_LEVEL,
-//       colorize: true,
-//       timestamp: () => new Date().toLocaleTimeString(),
-//       prettyPrint: true,
-//     }),
-//   ],
-// });
+const info = (message, data) => log("INFO", message, data);
+const warn = (message, data) => log("WARN", message, data);
+const error = (err) => log("ERROR", err);
 
-// module.exports = log;
+module.exports = {
+  info,
+  warn,
+  error,
+};

@@ -11,13 +11,12 @@ provider:
   environment:
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}
-    LOG_LEVEL: info
     API_ITEMS_ROUTE: item/v7/
     API_LOGIN_ROUTE: auth/v1/loginByEmail
     API_URL: https://apptoogoodtogo.com/api/
     LOGIN_SECRET_TAG: "${self:provider.stage}/tgtg/login"
-    DYNAMODB_CONSUMERS_TABLE: "tgtgConsumersTable"
-    SNS_TOPIC_NOTIFY_CONSUMERS: "arn:aws:sns:eu-west-1:104887580826:tgtgNotifyConsumersTopic"
+    DYNAMODB_CONSUMERS_TABLE: "tgtg-consumers-table-${self:provider.stage}"
+    SNS_TOPIC_NOTIFY_CONSUMERS: "arn:aws:sns:eu-west-1:104887580826:tgtg-notify-consumers-topic-${self:provider.stage}"
 
 plugins:
   - serverless-plugin-optimize
@@ -39,7 +38,7 @@ resources:
     tgtgConsumersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: tgtgConsumersTable
+        TableName: "tgtg-cconsumers-table-${self:provider.stage}"
         AttributeDefinitions:
           - AttributeName: contact
             AttributeType: S
@@ -51,4 +50,4 @@ resources:
       Type: AWS::SNS::Topic
       Properties:
         DisplayName: "Notif 2G2G"
-        TopicName: tgtgNotifyConsumersTopic
+        TopicName: "tgtg-notify-consumers-topic-${self:provider.stage}"

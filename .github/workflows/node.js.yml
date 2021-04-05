@@ -1,16 +1,11 @@
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Test project
+name: Deploy to AWS
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,5 +18,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
+    - name: Install dependencies
+      run: npm ci
+    - name: Run test suites
+      run: npm test
+    - name: Serverless deploy
+      uses: serverless/github-action@master
+      with:
+        args: deploy --stage dev
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

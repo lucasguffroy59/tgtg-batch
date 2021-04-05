@@ -38,7 +38,7 @@ resources:
     tgtgConsumersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: "tgtg-cconsumers-table-${self:provider.stage}"
+        TableName: "tgtg-consumers-table-${self:provider.stage}"
         AttributeDefinitions:
           - AttributeName: contact
             AttributeType: S
